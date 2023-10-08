@@ -19,6 +19,16 @@ def get_amount() -> int:
     return fibonacci(today)
 
 
+TIME_TEMPLATE = "%b %d, %Y %H:%M:%S %p"
+
+
+def date_str_to_date(date_str: str) -> datetime:
+    """
+    Create datetime from str
+    """
+    return datetime.datetime.strptime(date_str, TIME_TEMPLATE)
+
+
 class Customers:
     HarryPotter = "Harry Potter"
 
@@ -36,6 +46,6 @@ TransactionMessage = {
 
 @dataclass
 class Transaction:
-    date_time: str
+    date_time: datetime
     amount: int
     type: str

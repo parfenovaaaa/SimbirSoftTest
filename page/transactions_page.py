@@ -2,8 +2,8 @@ from typing import List, Union
 
 from selenium.webdriver.common.by import By
 
-from utils.common_utils import Transaction
 from page.base_page import BasePage
+from utils.common_utils import Transaction, date_str_to_date
 
 
 class TransactionsPage(BasePage):
@@ -21,6 +21,8 @@ class TransactionsPage(BasePage):
         transactions = []
         for row in self.find_elements(self.transaction_table):
             data = row.find_elements(By.TAG_NAME, "td")
-            transaction = Transaction(date_time=data[0].text, amount=int(data[1].text), type=data[2].text)
+            transaction = Transaction(
+                date_time=date_str_to_date(data[0].text), amount=int(data[1].text), type=data[2].text
+            )
             transactions.append(transaction)
         return transactions

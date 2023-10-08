@@ -26,7 +26,7 @@ def driver(request: SubRequest) -> WebDriver:
     """
     options = webdriver.FirefoxOptions()
     driver = webdriver.Remote(
-        command_executor='http://192.168.0.107:4444/wd/hub',
+        command_executor='http://localhost:4444/wd/hub',
         options=options,
     )
     yield driver
@@ -52,7 +52,6 @@ def attach_csv_teardown() -> Callable:
     """
     Create csv file of transactions and attach them to allure report
     """
-
     def _attach_csv(transactions: List[Transaction]) -> None:
         file_name = f"{str(datetime.now()).replace(':', '-').split('.')[0]}.csv"
         with open(file_name, "w", newline='') as file:
@@ -63,7 +62,6 @@ def attach_csv_teardown() -> Callable:
         with open(file_name, 'rb') as f:
             allure.attach(f.read(), name=f"{ALLURE_FILE}_transactions", attachment_type=AttachmentType.CSV)
         return
-
     return _attach_csv
 
 
