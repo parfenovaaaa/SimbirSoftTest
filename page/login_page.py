@@ -1,16 +1,13 @@
-import allure
 from selenium.webdriver.common.by import By
-
-from common import Customers
 from page.base_page import BasePage
 
 
-# @url("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login")
 class LoginPage(BasePage):
+    page_url_part = "#/login"
+
     customer_login_btn = (By.XPATH, "//button[@ng-click='customer()']")
     customer_selector = (By.ID, "userSelect")
     login_btn = (By.CLASS_NAME, "btn-default")
-    page_url_part = "#/login"
 
     def login_as_customer(self, customer_name: str) -> None:
         """

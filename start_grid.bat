@@ -1,0 +1,1 @@
+java -jar utils/selenium-server-4.13.0.jar standalone
