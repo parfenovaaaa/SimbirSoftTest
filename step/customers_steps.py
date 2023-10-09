@@ -3,11 +3,10 @@ from time import sleep
 import allure
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from utils.common_utils import TransactionType, Customers
 from page.customer_page import CustomerPage
 from page.login_page import LoginPage
 from page.transactions_page import TransactionsPage
-import pytest_check as check
+from utils.common_utils import TransactionType, Customers
 
 
 class CustomersSteps:
@@ -30,10 +29,13 @@ class CustomersSteps:
         """
         Make transaction and check it
         """
+        wait_transaction = 1
         with allure.step(f"Make {transaction_type} transaction with amount {amount}"):
             balance_before = self.customer_page.get_customer_balance()
             self.customer_page.make_transaction(amount=amount, transaction_type=transaction_type)
-            sleep(1)
+            sleep(wait_transaction)
             balance_after = self.customer_page.get_customer_balance()
             expected = balance_before + amount if transaction_type == TransactionType.deposit else balance_before - amount
-            check.equal(balance_after, expected)
+            assert balance_after == expected, (
+                f"Balance changed wrong after {transaction_type}. Expected: {expected}, but got: {balance_after}"
+            )

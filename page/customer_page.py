@@ -1,10 +1,9 @@
 from time import sleep
 
-import pytest_check as check
 from selenium.webdriver.common.by import By
 
-from utils.common_utils import TransactionType, TransactionMessage, Customers
 from page.base_page import BasePage
+from utils.common_utils import TransactionType, TransactionMessage, Customers
 
 
 class CustomerPage(BasePage):
@@ -41,11 +40,14 @@ class CustomerPage(BasePage):
         """
         Open customer account page and process selected transaction
         """
+        wait_prepare_input = 0.5
         self.open(self.page_url_part)
         locator = self.deposit_btn if transaction_type == TransactionType.deposit else self.withdrawl_btn
         self.click_web_element(locator)
-        sleep(0.5)
+        sleep(wait_prepare_input)
         self.fill_web_element(self.amount_input, amount)
         self.click_web_element(self.submit_transaction)
         message = self.find_element(self.message_field).text
-        check.equal(message, TransactionMessage[transaction_type])
+        assert message == TransactionMessage[transaction_type], (
+            f"Got wrong proccess message! Expected: {TransactionMessage[transaction_type]}, but got: {message}"
+        )

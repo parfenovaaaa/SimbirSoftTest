@@ -1,4 +1,5 @@
 import csv
+import pathlib
 from datetime import datetime
 from typing import Dict, Callable, List, Any
 
@@ -61,6 +62,7 @@ def attach_csv_teardown() -> Callable:
             [writer.writerow([tx.date_time, tx.amount, tx.type]) for tx in transactions]
         with open(file_name, 'rb') as f:
             allure.attach(f.read(), name=f"{ALLURE_FILE}_transactions", attachment_type=AttachmentType.CSV)
+        pathlib.Path(file_name).unlink()
         return
     return _attach_csv
 

@@ -1,1 +1,0 @@
-java -jar utils/selenium-server-4.13.0.jar node --port 5555 --hub http://localhost:4444/
