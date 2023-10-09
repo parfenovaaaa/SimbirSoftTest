@@ -1,8 +1,5 @@
 # Тестовое задание SimbirSoft
-python 3.8
-To run grid standalone use 
-start_grid.bat 
+Create venv, and start run_test.bat from project dir
+### .\run_test.bat
 
-To run test and generate allure use
-run_test.bat
-
+it will start grid node and hub, install requirements run test and generate allure report
